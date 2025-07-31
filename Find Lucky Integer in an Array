@@ -10,9 +10,9 @@ class Solution {
         Collections.sort(keys);
 
         int res = -1;
-        for(int i = 0; i < keys.size(); i++){
-            if(keys.get(i) == dict.get(keys.get(i))){
-                res = keys.get(i);
+        for(int key: keys){
+            if(key == dict.get(key)){
+                res = key;
             }
         }     
         return res;
