@@ -1,0 +1,19 @@
+class Solution {
+    public long countSubarrays(int[] nums, long k) {
+        int left = 0; 
+        int cnt = 0;
+        int curSum = 0;
+
+        for(int right = 0; right < nums.length; right++){
+            curSum += nums[right];
+
+            while(curSum * (right - left + 1) >= k){
+                curSum -= nums[left];
+                left++;
+            }
+            cnt += right - left + 1; 
+        }
+        return cnt;
+        
+    }
+}
