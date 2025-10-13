@@ -1,0 +1,46 @@
+class Solution {
+    public void solve(char[][] board) {
+        int nr = board.length;
+        if (nr == 0) return; // edge case
+        int nc = board[0].length;
+
+        // Step 1: Mark all 'O's connected to the borders as safe ('V')
+        for (int col = 0; col < nc; col++) {
+            if (board[0][col] == 'O') dfs(board, 0, col);
+            if (board[nr - 1][col] == 'O') dfs(board, nr - 1, col);
+        }
+
+        for (int row = 0; row < nr; row++) {
+            if (board[row][0] == 'O') dfs(board, row, 0);
+            if (board[row][nc - 1] == 'O') dfs(board, row, nc - 1);
+        }
+
+        // Step 2: Convert all unvisited 'O's to 'X' (captured)
+        // and revert 'V' back to 'O' (safe)
+        for (int row = 0; row < nr; row++) {
+            for (int col = 0; col < nc; col++) {
+                if (board[row][col] == 'V') {
+                    board[row][col] = 'O';
+                } else if (board[row][col] == 'O') {
+                    board[row][col] = 'X';
+                }
+            }
+        }
+    }
+
+    private void dfs(char[][] board, int row, int col) {
+        int nr = board.length;
+        int nc = board[0].length;
+
+        if (row < 0 || row >= nr || col < 0 || col >= nc || board[row][col] != 'O') {
+            return;
+        }
+
+        board[row][col] = 'V'; // Mark visited
+
+        dfs(board, row - 1, col); // up
+        dfs(board, row + 1, col); // down
+        dfs(board, row, col - 1); // left
+        dfs(board, row, col + 1); // right
+    }
+}
